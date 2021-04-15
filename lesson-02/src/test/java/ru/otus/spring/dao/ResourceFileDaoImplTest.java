@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.spring.dao.exception.ResourceDaoException;
+import ru.otus.spring.parser.ParserInputStream;
 
 import java.io.InputStream;
 
@@ -12,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Класс Dao ресурсов")
 class ResourceFileDaoImplTest {
-    private ResourceFileDaoImpl dao;
+    private QuestionDaoImpl dao;
+    private ParserInputStream parserInputStream;
 
     @BeforeEach
     void setUp() {
@@ -28,23 +30,13 @@ class ResourceFileDaoImplTest {
         dao = getResourceDao("test.csv");
 
         Exception exception = assertThrows(ResourceDaoException.class, () -> {
-            dao.getInputStreamFromResource();
+            dao.getQuestion();
         });
 
         assertEquals(exception.getClass(), ResourceDaoException.class);
     }
 
-    private ResourceFileDaoImpl getResourceDao(String resourceFile) {
-        return new ResourceFileDaoImpl(resourceFile);
-    }
-
-    @Test
-    @DisplayName("дожен возвращать stream, если файл существует")
-    void shouldGetInputStreamWhenFileFound() {
-        dao = getResourceDao("Questions.csv");
-
-        InputStream stream = dao.getInputStreamFromResource();
-
-        assertNotNull(stream);
+    private QuestionDaoImpl getResourceDao(String resourceFile) {
+        return new QuestionDaoImpl(resourceFile, parserInputStream);
     }
 }

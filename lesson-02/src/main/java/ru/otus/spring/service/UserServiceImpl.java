@@ -9,8 +9,8 @@ import ru.otus.spring.domain.User;
  */
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
-    private final CommunicationService consoleService;
+public class UserServiceImpl implements UserService {
+    private final CommunicationService communicationService;
 
     @Override
     public User getUser() {
@@ -18,12 +18,12 @@ public class UserServiceImpl implements UserService{
     }
 
     private String askUserSurname() {
-        consoleService.ask("What is your last name?");
-        return consoleService.getAnswer();
+        communicationService.ask("What is your last name?");
+        return communicationService.getAnswer();
     }
 
     private String askUserName() {
-        consoleService.ask("What is your name?");
-        return consoleService.getAnswer();
+        communicationService.ask("What is your name?");
+        return communicationService.getAnswer();
     }
 }

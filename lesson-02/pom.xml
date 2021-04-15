@@ -32,7 +32,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>ru.otus.spring.Lesson01Application</mainClass>
+                                    <mainClass>ru.otus.spring.Lesson02Application</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>

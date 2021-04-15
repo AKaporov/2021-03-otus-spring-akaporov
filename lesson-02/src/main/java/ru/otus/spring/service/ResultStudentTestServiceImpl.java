@@ -10,21 +10,17 @@ import ru.otus.spring.domain.ResultStudentTest;
 @Service
 @RequiredArgsConstructor
 public class ResultStudentTestServiceImpl implements ResultStudentTestService {
-    private final CommunicationService consoleService;
+    private final CommunicationService communicationService;
 
     @Override
     public void resultStudentTest(ResultStudentTest result) {
-        String resultTest = new StringBuilder("User ")
-                .append(result.getUser().getSurname())
-                .append(" ")
-                .append(result.getUser().getName())
-                .append(" answered ")
-                .append(result.getCountRightAnswer())
-                .append(" questions out of ")
-                .append(result.getCountQuestion())
-                .append(" correctly!")
-                .toString();
+        String resultTest = String.format("User %s answer %s questions out of %s correctly!",
+                result.getUser().getName(),
+                result.getUser().getName(),
+                result.getCountRightAnswer(),
+                result.getCountQuestion()
+        );
 
-        consoleService.ask(resultTest);
+        communicationService.ask(resultTest);
     }
 }

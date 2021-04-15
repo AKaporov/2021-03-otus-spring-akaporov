@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AnswerServiceImpl implements AnswerService {
-    private final CommunicationService consoleService;
+    private final CommunicationService communicationService;
 
     @Override
     public String getAnswer() {
-        return consoleService.getAnswer();
+        return communicationService.getAnswer();
     }
 }

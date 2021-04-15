@@ -7,10 +7,10 @@ import ru.otus.spring.service.StudentTestService;
 
 @ComponentScan
 @PropertySource("classpath:application.properties")
-public class Lesson01Application {
+public class Lesson02Application {
 
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Lesson01Application.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Lesson02Application.class);
         StudentTestService studentTestService = context.getBean(StudentTestService.class);
         studentTestService.startTest();
         context.close();
