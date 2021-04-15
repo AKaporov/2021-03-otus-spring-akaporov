@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * Класс для работы с файлом-ресурсов.
+ * Класс для работы с Dao вопросами
  */
 
 @Component
