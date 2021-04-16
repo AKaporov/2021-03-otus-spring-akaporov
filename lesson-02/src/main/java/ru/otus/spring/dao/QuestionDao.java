@@ -1,5 +1,7 @@
 package ru.otus.spring.dao;
 
+import ru.otus.spring.domain.Question;
+
 import java.util.List;
 
 /**
@@ -7,5 +9,5 @@ import java.util.List;
  */
 
 public interface QuestionDao {
-    List<String[]> getQuestion();
+    List<Question> getQuestion();
 }

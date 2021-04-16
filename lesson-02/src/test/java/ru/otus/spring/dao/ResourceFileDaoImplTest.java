@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.spring.dao.exception.ResourceDaoException;
 import ru.otus.spring.parser.ParserInputStream;
+import ru.otus.spring.parser.ParserQuestion;
 
 import java.io.InputStream;
 
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ResourceFileDaoImplTest {
     private QuestionDaoImpl dao;
     private ParserInputStream parserInputStream;
+    private ParserQuestion parserQuestion;
 
     @BeforeEach
     void setUp() {
@@ -37,6 +39,6 @@ class ResourceFileDaoImplTest {
     }
 
     private QuestionDaoImpl getResourceDao(String resourceFile) {
-        return new QuestionDaoImpl(resourceFile, parserInputStream);
+        return new QuestionDaoImpl(resourceFile, parserInputStream, parserQuestion);
     }
 }

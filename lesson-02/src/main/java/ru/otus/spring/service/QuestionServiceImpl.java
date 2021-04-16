@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.dao.QuestionDao;
 import ru.otus.spring.domain.Question;
-import ru.otus.spring.parser.ParserQuestion;
 
 import java.util.List;
 
@@ -16,13 +15,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
     private final QuestionDao questionDao;
-    private final ParserQuestion parserQuestion;
     private final CommunicationService communicationService;
 
     @Override
     public List<Question> getAllQuestion() {
-        List<String[]> streamList = questionDao.getQuestion();
-        return parserQuestion.parser(streamList);
+        return questionDao.getQuestion();
     }
 
     @Override
