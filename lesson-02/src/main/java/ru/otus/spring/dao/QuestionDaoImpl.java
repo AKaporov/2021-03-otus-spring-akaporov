@@ -37,10 +37,10 @@ public class QuestionDaoImpl implements QuestionDao {
             throw new ResourceDaoException(exception);
         }
 
-        return getQuestionListfromStream(streamFromResource);
+        return getQuestionListFromStream(streamFromResource);
     }
 
-    private List<Question> getQuestionListfromStream(InputStream streamFromResource) {
+    private List<Question> getQuestionListFromStream(InputStream streamFromResource) {
         List<String[]> arrayList = parserInputStream.parser(streamFromResource);
         return parserQuestion.parser(arrayList);
     }
