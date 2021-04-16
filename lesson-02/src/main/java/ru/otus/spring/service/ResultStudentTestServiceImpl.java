@@ -14,9 +14,9 @@ public class ResultStudentTestServiceImpl implements ResultStudentTestService {
 
     @Override
     public void resultStudentTest(ResultStudentTest result) {
-        String resultTest = String.format("User %s answer %s questions out of %s correctly!",
-                result.getUser().getName(),
-                result.getUser().getName(),
+        String resultTest = String.format("User %s %s answered %s questions out of %s correctly!",
+                result.getUser().getName().toUpperCase(),
+                result.getUser().getName().toUpperCase(),
                 result.getCountRightAnswer(),
                 result.getCountQuestion()
         );

@@ -16,8 +16,8 @@ public class CommunicationConsoleService implements CommunicationService {
     private final PrintStream systemOut;
     private final BufferedReader reader;
 
-    public CommunicationConsoleService(@Value("#{T(${console.output}).${console.output.method}}") PrintStream systemOut,
-                                       @Value("#{T(${console.input}).${console.input.method}}") InputStream systemIn) {
+    public CommunicationConsoleService(@Value("#{T(java.lang.System).out}") PrintStream systemOut,
+                                       @Value("#{T(java.lang.System).in}") InputStream systemIn) {
         this.systemOut = systemOut;
         this.reader = new BufferedReader(new InputStreamReader(systemIn));
     }

@@ -27,10 +27,7 @@ public class QuestionDaoImpl implements QuestionDao {
         InputStream streamFromResource = this.getClass().getClassLoader().getResourceAsStream(resourceFile);
 
         if (streamFromResource == null) {
-            String exception = new StringBuilder("Resource file '")
-                    .append(resourceFile)
-                    .append("' not found! ")
-                    .toString();
+            String exception = String.format("Resource file '%s'not found!", resourceFile);
             throw new ResourceDaoException(exception);
         }
 
