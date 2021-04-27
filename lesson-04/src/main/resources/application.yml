@@ -1,7 +1,0 @@
-spring:
-  messages:
-    basename: i18n.messages
-    fallback-to-system-locale: true
-
-student-test:
-  csv-file-name: Questions_ru_RU.csv

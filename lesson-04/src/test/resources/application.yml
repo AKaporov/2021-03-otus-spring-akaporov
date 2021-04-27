@@ -1,6 +1,0 @@
-spring:
-  messages:
-    basename: i18n.messages
-
-student-test:
-  csv-file-name: QuestionsTest.csv
