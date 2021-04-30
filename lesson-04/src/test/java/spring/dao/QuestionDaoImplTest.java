@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.context.MessageSource;
 import ru.otus.spring.config.QuestionConfig;
 import ru.otus.spring.dao.QuestionDaoImpl;
 import ru.otus.spring.dao.exception.QuestionDaoException;
@@ -30,8 +29,6 @@ class QuestionDaoImplTest {
     private ParseInputStream parseInputStream;
     @Mock
     private ParseQuestion parseQuestion;
-    @Mock
-    private MessageSource messageSource;
 
     @Test
     @DisplayName("должен генерить исключение, если файла с вопросами не существует")
@@ -48,7 +45,7 @@ class QuestionDaoImplTest {
     }
 
     private QuestionDaoImpl getQuestionDao(QuestionConfig questionConfig) {
-        return new QuestionDaoImpl(questionConfig, parseInputStream, parseQuestion, messageSource);
+        return new QuestionDaoImpl(questionConfig, parseInputStream, parseQuestion);
     }
 
     @Test

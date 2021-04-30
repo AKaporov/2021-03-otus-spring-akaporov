@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.context.MessageSource;
 import ru.otus.spring.service.CommunicationConsoleServiceImpl;
 import ru.otus.spring.service.exception.CommunicationConsoleException;
 
@@ -24,15 +23,13 @@ class CommunicationConsoleServiceImplTest {
     private ByteArrayOutputStream outputStream;
 
     @Mock
-    private MessageSource messageSource;
-    @Mock
     private InputStream systemIn;
 
     @BeforeEach
     void setUp() {
         outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);
-        communicationConsoleService = new CommunicationConsoleServiceImpl(printStream, systemIn, messageSource);
+        communicationConsoleService = new CommunicationConsoleServiceImpl(printStream, systemIn);
     }
 
     @Test

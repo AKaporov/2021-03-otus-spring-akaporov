@@ -1,8 +1,6 @@
 package ru.otus.spring.dao;
 
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.otus.spring.config.QuestionConfig;
 import ru.otus.spring.dao.exception.QuestionDaoException;
 import ru.otus.spring.domain.Question;
@@ -16,18 +14,16 @@ import java.util.List;
  * Класс для работы с Dao вопросами
  */
 
-@Component
+@Repository
 public class QuestionDaoImpl implements QuestionDao {
     private final String resourceFile;
     private final ParseInputStream parseInputStream;
     private final ParseQuestion parseQuestion;
-    private final MessageSource messageSource;
 
-    public QuestionDaoImpl(QuestionConfig questionConfig, ParseInputStream parseInputStream, ParseQuestion parseQuestion, MessageSource messageSource) {
+    public QuestionDaoImpl(QuestionConfig questionConfig, ParseInputStream parseInputStream, ParseQuestion parseQuestion) {
         this.resourceFile = questionConfig.getCsvFileName();
         this.parseInputStream = parseInputStream;
         this.parseQuestion = parseQuestion;
-        this.messageSource = messageSource;
     }
 
     @Override
@@ -35,8 +31,7 @@ public class QuestionDaoImpl implements QuestionDao {
         InputStream streamFromResource = this.getClass().getClassLoader().getResourceAsStream(resourceFile);
 
         if (streamFromResource == null) {
-            String exception = messageSource.getMessage("exception.questionDao.message",
-                    new String[]{resourceFile}, LocaleContextHolder.getLocale());
+            String exception = String.format("Resource file %s not found!", resourceFile);
             throw new QuestionDaoException(exception);
         }
 

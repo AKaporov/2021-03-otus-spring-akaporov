@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class ResultStudentTest {
-    private final User user;
+    private final Student student;
     private final int countQuestion;
     private final int countRightAnswer;
 }

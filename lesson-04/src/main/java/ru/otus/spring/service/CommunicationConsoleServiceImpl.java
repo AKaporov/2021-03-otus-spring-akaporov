@@ -1,8 +1,6 @@
 package ru.otus.spring.service;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.service.exception.CommunicationConsoleException;
 
@@ -14,17 +12,13 @@ import java.io.*;
 
 @Service
 public class CommunicationConsoleServiceImpl implements CommunicationService {
-
     private final PrintStream systemOut;
     private final BufferedReader reader;
-    private final MessageSource messageSource;
 
     public CommunicationConsoleServiceImpl(@Value("#{T(java.lang.System).out}") PrintStream systemOut,
-                                           @Value("#{T(java.lang.System).in}") InputStream systemIn,
-                                           MessageSource messageSource) {
+                                           @Value("#{T(java.lang.System).in}") InputStream systemIn) {
         this.systemOut = systemOut;
         this.reader = new BufferedReader(new InputStreamReader(systemIn));
-        this.messageSource = messageSource;
     }
 
     @Override
@@ -37,8 +31,7 @@ public class CommunicationConsoleServiceImpl implements CommunicationService {
         try {
             return reader.readLine();
         } catch (IOException e) {
-            String exception = messageSource.getMessage("exception.communication-console.message",
-                    new String[]{e.getMessage()}, LocaleContextHolder.getLocale());
+            String exception = String.format("Error reading the response from the console! " + e.getMessage());
             throw new CommunicationConsoleException(exception);
         }
     }

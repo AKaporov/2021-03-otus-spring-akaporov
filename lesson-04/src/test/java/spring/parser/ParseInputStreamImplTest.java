@@ -4,9 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.context.MessageSource;
 import ru.otus.spring.parse.ParseInputStreamImpl;
 import ru.otus.spring.parse.exception.ParseException;
 import spring.generator.CreateArrayStringListGenerator;
@@ -22,12 +20,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DisplayName("Класс ParserInputStreamImpl")
 class ParseInputStreamImplTest {
     private ParseInputStreamImpl parserInputStream;
-    @Mock
-    private MessageSource messageSource;
 
     @BeforeEach
     void setUp() {
-        parserInputStream = new ParseInputStreamImpl(messageSource);
+        parserInputStream = new ParseInputStreamImpl();
     }
 
     @Test

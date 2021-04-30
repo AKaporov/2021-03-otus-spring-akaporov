@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.domain.Question;
 import ru.otus.spring.domain.ResultStudentTest;
-import ru.otus.spring.domain.User;
+import ru.otus.spring.domain.Student;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class StudentTestServiceImpl implements StudentTestService {
     @Override
     public void startTest() {
         int countRightAnswer = 0;
-        User user = userService.getUser();
+        Student student = userService.getUser();
 
         List<Question> allQuestion = questionService.getAllQuestion();
         for (Question question : allQuestion) {
@@ -38,6 +38,6 @@ public class StudentTestServiceImpl implements StudentTestService {
             }
         }
 
-        resultService.resultStudentTest(new ResultStudentTest(user, allQuestion.size(), countRightAnswer));
+        resultService.resultStudentTest(new ResultStudentTest(student, allQuestion.size(), countRightAnswer));
     }
 }

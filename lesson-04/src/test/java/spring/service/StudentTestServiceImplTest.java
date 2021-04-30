@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.spring.domain.Question;
 import ru.otus.spring.domain.ResultStudentTest;
-import ru.otus.spring.domain.User;
+import ru.otus.spring.domain.Student;
 import ru.otus.spring.service.*;
 import spring.generator.CreateQuestionListGenerator;
 import spring.generator.UserGenerator;
@@ -40,8 +40,8 @@ class StudentTestServiceImplTest {
     @Test
     @DisplayName("должен проводить тестирование студента")
     void shouldTestStudent() {
-        User user = UserGenerator.createUser("name", "surname");
-        when(userService.getUser()).thenReturn(user);
+        Student student = UserGenerator.createUser("name", "surname");
+        when(userService.getUser()).thenReturn(student);
         List<Question> allQuestion = CreateQuestionListGenerator.createOneQuestionInList();
         when(questionService.getAllQuestion()).thenReturn(allQuestion);
         String answer = "B";

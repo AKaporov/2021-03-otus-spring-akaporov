@@ -1,9 +1,9 @@
 package spring.generator;
 
-import ru.otus.spring.domain.User;
+import ru.otus.spring.domain.Student;
 
 public class UserGenerator {
-    public static User createUser(String name, String surname){
-        return new User(name, surname);
+    public static Student createUser(String name, String surname){
+        return new Student(name, surname);
     }
 }
