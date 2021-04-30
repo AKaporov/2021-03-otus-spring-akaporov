@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Класс Пользователя которого тестируют
+ * Класс Студента которого тестируют
  */
 
 @Getter
