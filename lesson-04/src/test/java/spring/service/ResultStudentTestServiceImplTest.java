@@ -10,9 +10,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.spring.domain.ResultStudentTest;
 import ru.otus.spring.domain.Student;
 import ru.otus.spring.service.CommunicationService;
-import ru.otus.spring.service.QuestionLocale;
+import ru.otus.spring.service.StudentTestLocale;
 import ru.otus.spring.service.ResultStudentTestServiceImpl;
-import spring.generator.UserGenerator;
+import spring.generator.CreateStudentGenerator;
 
 import static org.mockito.Mockito.when;
 
@@ -24,11 +24,11 @@ class ResultStudentTestServiceImplTest {
     @Mock
     private CommunicationService communicationService;
     @Mock
-    private QuestionLocale questionLocale;
+    private StudentTestLocale studentTestLocale;
 
     @BeforeEach
     void setUp() {
-        resultStudentTestService = new ResultStudentTestServiceImpl(communicationService, questionLocale);
+        resultStudentTestService = new ResultStudentTestServiceImpl(communicationService, studentTestLocale);
     }
 
     @Test
@@ -36,13 +36,13 @@ class ResultStudentTestServiceImplTest {
     void resultStudentTest() {
         ResultStudentTest result = createResultStudentTest();
 
-        String question = String.format("User %s %s answered %s questions out of %s correctly!",
+        String question = String.format("Student %s %s answered %s questions out of %s correctly!",
                 result.getStudent().getName().toUpperCase(),
                 result.getStudent().getSurname().toUpperCase(),
                 String.valueOf(result.getCountRightAnswer()),
                 String.valueOf(result.getCountQuestion())
         );
-        when(questionLocale.getMessage("result.student-test.message",
+        when(studentTestLocale.getMessage("result.student-test.message",
                 new String[]{result.getStudent().getName().toUpperCase(),
                         result.getStudent().getSurname().toUpperCase(),
                         String.valueOf(result.getCountRightAnswer()),
@@ -56,7 +56,7 @@ class ResultStudentTestServiceImplTest {
     }
 
     private ResultStudentTest createResultStudentTest() {
-        Student student = UserGenerator.createUser("name", "surname");
+        Student student = CreateStudentGenerator.createStudent("name", "surname");
         return new ResultStudentTest(student, 5, 5);
     }
 }

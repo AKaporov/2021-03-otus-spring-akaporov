@@ -12,5 +12,5 @@ import org.springframework.stereotype.Component;
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "student-test")
 public class QuestionConfig {
-    String csvFileName;
+    private String csvFileName;
 }

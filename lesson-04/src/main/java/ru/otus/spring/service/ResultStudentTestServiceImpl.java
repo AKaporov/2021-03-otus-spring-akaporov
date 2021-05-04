@@ -12,11 +12,11 @@ import ru.otus.spring.domain.ResultStudentTest;
 @RequiredArgsConstructor
 public class ResultStudentTestServiceImpl implements ResultStudentTestService {
     private final CommunicationService communicationService;
-    private final QuestionLocale questionLocale;
+    private final StudentTestLocale studentTestLocale;
 
     @Override
     public void resultStudentTest(ResultStudentTest result) {
-        String resultTest = questionLocale.getMessage("result.student-test.message",
+        String resultTest = studentTestLocale.getMessage("result.student-test.message",
                 new String[]{result.getStudent().getName().toUpperCase(),
                         result.getStudent().getSurname().toUpperCase(),
                         String.valueOf(result.getCountRightAnswer()),

@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentTestServiceImpl implements StudentTestService {
     private final QuestionService questionService;
-    private final UserService userService;
+    private final StudentService studentService;
     private final AnswerService answerService;
     private final CheckService checkService;
     private final ResultStudentTestService resultService;
@@ -27,7 +27,7 @@ public class StudentTestServiceImpl implements StudentTestService {
     @Override
     public void startTest() {
         int countRightAnswer = 0;
-        Student student = userService.getUser();
+        Student student = studentService.getStudent();
 
         List<Question> allQuestion = questionService.getAllQuestion();
         for (Question question : allQuestion) {

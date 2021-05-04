@@ -11,7 +11,7 @@ import ru.otus.spring.domain.ResultStudentTest;
 import ru.otus.spring.domain.Student;
 import ru.otus.spring.service.*;
 import spring.generator.CreateQuestionListGenerator;
-import spring.generator.UserGenerator;
+import spring.generator.CreateStudentGenerator;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ class StudentTestServiceImplTest {
     @Mock
     private QuestionService questionService;
     @Mock
-    private UserService userService;
+    private StudentService studentService;
     @Mock
     private AnswerService answerService;
     @Mock
@@ -34,14 +34,14 @@ class StudentTestServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        studentTestService = new StudentTestServiceImpl(questionService, userService, answerService, checkService, resultService);
+        studentTestService = new StudentTestServiceImpl(questionService, studentService, answerService, checkService, resultService);
     }
 
     @Test
     @DisplayName("должен проводить тестирование студента")
     void shouldTestStudent() {
-        Student student = UserGenerator.createUser("name", "surname");
-        when(userService.getUser()).thenReturn(student);
+        Student student = CreateStudentGenerator.createStudent("name", "surname");
+        when(studentService.getStudent()).thenReturn(student);
         List<Question> allQuestion = CreateQuestionListGenerator.createOneQuestionInList();
         when(questionService.getAllQuestion()).thenReturn(allQuestion);
         String answer = "B";

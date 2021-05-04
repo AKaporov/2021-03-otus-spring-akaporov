@@ -9,35 +9,35 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.spring.domain.Student;
 import ru.otus.spring.service.CommunicationService;
-import ru.otus.spring.service.QuestionLocale;
-import ru.otus.spring.service.UserServiceImpl;
+import ru.otus.spring.service.StudentServiceImpl;
+import ru.otus.spring.service.StudentTestLocale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("Класс UserServiceImpl")
+@DisplayName("Класс StudentServiceImpl")
 class StudentServiceImplTest {
-    private UserServiceImpl userService;
+    private StudentServiceImpl studentService;
     @Mock
     private CommunicationService communicationService;
     @Mock
-    private QuestionLocale questionLocale;
+    private StudentTestLocale studentTestLocale;
 
 
     @BeforeEach
     void setUp() {
-        userService = new UserServiceImpl(communicationService, questionLocale);
+        studentService = new StudentServiceImpl(communicationService, studentTestLocale);
     }
 
     @Test
-    @DisplayName("должен возвращать Фамилию и Имя проверяемого пользователя")
-    void getUser() {
+    @DisplayName("должен возвращать Фамилию и Имя проверяемого студента")
+    void getStudent() {
         Student expectedStudent = new Student("name", "surname");
         Mockito.when(communicationService.getAnswer())
                 .thenReturn(expectedStudent.getName())
                 .thenReturn(expectedStudent.getSurname());
 
-        Student student = userService.getUser();
+        Student student = studentService.getStudent();
 
         assertThat(student).usingRecursiveComparison().isEqualTo(expectedStudent);
     }
