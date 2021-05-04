@@ -1,0 +1,9 @@
+${AnsiColor.BRIGHT_GREEN}${AnsiBackground.233}     _______ _________          ______   _______  _       _________  _________ _______  _______ _________      ${AnsiBackground.DEFAULT}
+${AnsiBackground.234}     (  ____ \\__   __/|\     /|(  __  \ (  ____ \( (    /|\__   __/  \__   __/(  ____ \(  ____ \\__   __/     ${AnsiBackground.DEFAULT}
+${AnsiBackground.235}     | (    \/   ) (   | )   ( || (  \  )| (    \/|  \  ( |   ) (        ) (   | (    \/| (    \/   ) (        ${AnsiBackground.DEFAULT}
+${AnsiBackground.236}     | (_____    | |   | |   | || |   ) || (__    |   \ | |   | |        | |   | (__    | (_____    | |        ${AnsiBackground.DEFAULT}
+${AnsiBackground.237}     (_____  )   | |   | |   | || |   | ||  __)   | (\ \) |   | |        | |   |  __)   (_____  )   | |        ${AnsiBackground.DEFAULT}
+${AnsiBackground.238}           ) |   | |   | |   | || |   ) || (      | | \   |   | |        | |   | (            ) |   | |        ${AnsiBackground.DEFAULT}
+${AnsiBackground.239}     /\____) |   | |   | (___) || (__/  )| (____/\| )  \  |   | |        | |   | (____/\/\____) |   | |        ${AnsiBackground.DEFAULT}
+${AnsiBackground.240}     \_______)   )_(   (_______)(______/ (_______/|/    )_)   )_(        )_(   (_______/\_______)   )_(        ${AnsiBackground.DEFAULT}
+${AnsiBackground.DEFAULT}${AnsiColor.DEFAULT}
