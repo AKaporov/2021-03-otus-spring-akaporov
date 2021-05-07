@@ -1,20 +1,30 @@
 package spring.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import ru.otus.spring.service.CheckService;
 import ru.otus.spring.service.CheckServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest
 @DisplayName("Класс CheckServiceImpl")
 class CheckServiceImplTest {
-    private CheckServiceImpl checkService;
+    @Autowired
+    private CheckService checkService;
 
-    @BeforeEach
-    void setUp() {
-        checkService = new CheckServiceImpl();
+    @Configuration
+    static class TestConfiguration {
+
+        @Bean
+        public CheckService checkService() {
+            return new CheckServiceImpl();
+        }
     }
 
     @Test

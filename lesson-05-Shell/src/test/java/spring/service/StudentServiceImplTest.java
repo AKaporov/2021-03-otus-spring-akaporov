@@ -10,7 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.spring.domain.Student;
 import ru.otus.spring.service.CommunicationService;
 import ru.otus.spring.service.StudentServiceImpl;
-import ru.otus.spring.service.StudentTestLocale;
+import ru.otus.spring.service.LocaleService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,12 +21,12 @@ class StudentServiceImplTest {
     @Mock
     private CommunicationService communicationService;
     @Mock
-    private StudentTestLocale studentTestLocale;
+    private LocaleService localeService;
 
 
     @BeforeEach
     void setUp() {
-        studentService = new StudentServiceImpl(communicationService, studentTestLocale);
+        studentService = new StudentServiceImpl(communicationService, localeService);
     }
 
     @Test

@@ -12,7 +12,7 @@ import ru.otus.spring.domain.Student;
 @RequiredArgsConstructor
 public class StudentTestShell {
     private final StudentTestService studentTestService;
-    private final StudentTestLocale studentTestLocale;
+    private final LocaleService localeService;
     private Student student;
 
     @ShellMethod(value = "Let's start testing!", key = {"start", "s"})
@@ -24,10 +24,10 @@ public class StudentTestShell {
     @ShellMethod(value = "Introduce yourself as your first and last name", key = {"introduce", "i"})
     public String getStudent(@ShellOption String name, @ShellOption String surName) {
         student = new Student(name, surName);
-        return studentTestLocale.getMessage("shell.welcome", new String[]{student.getName(), student.getSurname()});
+        return localeService.getMessage("shell.welcome", new String[]{student.getName(), student.getSurname()});
     }
 
     private Availability isStudentAvailable() {
-        return student != null ? Availability.available() : Availability.unavailable(studentTestLocale.getMessage("shell.introduce", null));
+        return student != null ? Availability.available() : Availability.unavailable(localeService.getMessage("shell.introduce", null));
     }
 }

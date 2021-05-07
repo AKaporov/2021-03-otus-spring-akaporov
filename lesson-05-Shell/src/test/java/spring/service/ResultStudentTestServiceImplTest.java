@@ -10,7 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.spring.domain.ResultStudentTest;
 import ru.otus.spring.domain.Student;
 import ru.otus.spring.service.CommunicationService;
-import ru.otus.spring.service.StudentTestLocale;
+import ru.otus.spring.service.LocaleService;
 import ru.otus.spring.service.ResultStudentTestServiceImpl;
 import spring.generator.CreateStudentGenerator;
 
@@ -24,11 +24,11 @@ class ResultStudentTestServiceImplTest {
     @Mock
     private CommunicationService communicationService;
     @Mock
-    private StudentTestLocale studentTestLocale;
+    private LocaleService localeService;
 
     @BeforeEach
     void setUp() {
-        resultStudentTestService = new ResultStudentTestServiceImpl(communicationService, studentTestLocale);
+        resultStudentTestService = new ResultStudentTestServiceImpl(communicationService, localeService);
     }
 
     @Test
@@ -42,7 +42,7 @@ class ResultStudentTestServiceImplTest {
                 String.valueOf(result.getCountRightAnswer()),
                 String.valueOf(result.getCountQuestion())
         );
-        when(studentTestLocale.getMessage("result.student-test.message",
+        when(localeService.getMessage("result.student-test.message",
                 new String[]{result.getStudent().getName().toUpperCase(),
                         result.getStudent().getSurname().toUpperCase(),
                         String.valueOf(result.getCountRightAnswer()),

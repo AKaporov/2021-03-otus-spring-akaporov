@@ -12,7 +12,7 @@ import ru.otus.spring.domain.Student;
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
     private final CommunicationService communicationService;
-    private final StudentTestLocale studentTestLocale;
+    private final LocaleService localeService;
 
     @Override
     public Student getStudent() {
@@ -20,13 +20,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private String askStudentSurname() {
-        String name = studentTestLocale.getMessage("student.surname.message", null);
+        String name = localeService.getMessage("student.surname.message", null);
         communicationService.ask(name);
         return communicationService.getAnswer();
     }
 
     private String askStudentName() {
-        String surName = studentTestLocale.getMessage("student.name.message", null);
+        String surName = localeService.getMessage("student.name.message", null);
         communicationService.ask(surName);
         return communicationService.getAnswer();
     }
