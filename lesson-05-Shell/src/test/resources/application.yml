@@ -1,0 +1,10 @@
+spring:
+  messages:
+    basename: i18n.messages
+    fallback-to-system-locale: true
+  shell:
+    interactive:
+      enabled: false
+
+student-test:
+  csv-file-name: QuestionsTest.csv
