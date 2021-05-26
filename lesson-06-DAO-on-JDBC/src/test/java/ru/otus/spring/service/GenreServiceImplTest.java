@@ -1,5 +1,6 @@
 package ru.otus.spring.service;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,15 +27,15 @@ class GenreServiceImplTest {
     }
 
     @Test
-    @DisplayName("должен добавлять новую genre")
+    @DisplayName("должен добавлять новый genre")
     void shouldInsertNewGenre() {
         Genre newGenre = new Genre(NEW_GENRE_NAME);
 
-        Mockito.when(genreDao.insert(newGenre)).thenReturn(NEW_GENRE_ID);
+        Genre expectedGenre = new Genre(NEW_GENRE_ID, NEW_GENRE_NAME);
+        Mockito.when(genreDao.insert(newGenre)).thenReturn(expectedGenre);
 
-        genreService.insert(newGenre);
+        Genre actualGenre = genreService.insert(newGenre);
 
-        Mockito.verify(genreDao, Mockito.times(1)).insert(newGenre);
-
+        Assertions.assertThat(actualGenre).usingRecursiveComparison().isEqualTo(expectedGenre);
     }
 }

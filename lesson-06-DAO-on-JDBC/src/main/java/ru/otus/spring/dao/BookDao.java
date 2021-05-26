@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookDao {
-    long insert(Book book);
+    Book insertAll(Book book);
 
-    Optional<Book> getById(long id);
+    Book getAllById(long id);
+
+    Book getById(long id);
+
+    Optional<Book> getAllByTitle(String bookTitle);
 
     Optional<Book> getByTitle(String titleBook);
 
@@ -17,4 +21,6 @@ public interface BookDao {
     void update(Book book);
 
     void deleteById(long id);
+
+
 }

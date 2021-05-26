@@ -3,9 +3,10 @@ package ru.otus.spring.service;
 import ru.otus.spring.domain.Genre;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GenreService {
-    long insert(Genre genre);
+    Genre insert(Genre genre);
 
     Genre getById(long id);
 
@@ -15,5 +16,5 @@ public interface GenreService {
 
     void deleteById(long id);
 
-    Genre getByName(String genreName);
+    Optional<Genre> getByName(String genreName);
 }

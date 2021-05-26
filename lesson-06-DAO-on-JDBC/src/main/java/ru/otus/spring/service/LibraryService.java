@@ -1,15 +1,15 @@
 package ru.otus.spring.service;
 
-import ru.otus.spring.domain.BookToAuthorToGenreLink;
+import ru.otus.spring.domain.Book;
 
 import java.util.List;
 
 public interface LibraryService {
-    BookToAuthorToGenreLink getLinkByBookTitle(String bookTitle);
+    Book gelBookAllInfoByBookTitle(String bookTitle);
 
-    boolean insertLinkWithAllInfo(String titleBook, String fullNameAuthor, String genre);
+    List<Book> getAllBookInfo();
 
-    void deleteLinkByBookTitle(String bookTitle);
+    Book insertBookWithAllInfo(String titleBook, String authorName, String genreName);
 
-    List<BookToAuthorToGenreLink> getAllLink();
+    void deleteBookWithAllInfoByBookTitle(String bookTitle);
 }

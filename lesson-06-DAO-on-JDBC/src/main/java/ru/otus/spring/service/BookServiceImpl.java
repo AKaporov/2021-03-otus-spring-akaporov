@@ -18,17 +18,13 @@ public class BookServiceImpl implements BookService {
     private final BookDao dao;
 
     @Override
-    public long insert(Book book) {
-        return dao.insert(book);
+    public Book insertAll(Book book) {
+        return dao.insertAll(book);
     }
 
     @Override
-    public Book getById(long id) {
-        return dao.getById(id).orElse(emptyBook());
-    }
-
-    private Book emptyBook() {
-        return new Book("");
+    public Book getAllById(long id) {
+        return dao.getAllById(id);
     }
 
     @Override
@@ -43,14 +39,21 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteById(long id) {
-        Optional<Book> findBook = dao.getById(id);
-        if (findBook.isPresent()) {
-            dao.deleteById(id);
-        }
+        dao.deleteById(id);
     }
 
     @Override
-    public Book getByTitle(String titleBook) {
-        return dao.getByTitle(titleBook).orElse(emptyBook());
+    public Optional<Book> getAllByTitle(String bookTitle) {
+        return dao.getAllByTitle(bookTitle);
+    }
+
+    @Override
+    public Book getById(long id) {
+        return dao.getById(id);
+    }
+
+    @Override
+    public Optional<Book> getByTitle(String titleBook) {
+        return dao.getByTitle(titleBook);
     }
 }

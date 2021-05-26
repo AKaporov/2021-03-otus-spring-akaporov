@@ -4,10 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
-import ru.otus.spring.domain.BookToAuthorToGenreLink;
 import ru.otus.spring.domain.Genre;
+import ru.otus.spring.service.exception.ServiceException;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Сервис по работе с библиотекой
@@ -16,97 +17,73 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class LibraryServiceImpl implements LibraryService {
-    private static final long EMPTY_ID = 0L;
     private final BookService bookService;
     private final AuthorService authorService;
     private final GenreService genreService;
-    private final BookToAuthorToGenreLinkService service;
 
-    @Override
-    public BookToAuthorToGenreLink getLinkByBookTitle(String bookTitle) {
-        return service.getByBookTitle(bookTitle);
-    }
-
-    @Override
-    public boolean insertLinkWithAllInfo(String titleBook, String fullNameAuthor, String genreName) {
-        long newLinkId = EMPTY_ID;
-        Book newBook = checkAndInsertBook(titleBook);
-        Author newAuthor = checkAndInsertAuthor(fullNameAuthor);
-        Genre newGenre = checkAndInsertGenre(genreName);
-
-        boolean existsInfo = (newBook.getId() != EMPTY_ID) && (newAuthor.getId() != EMPTY_ID) && (newGenre.getId() != EMPTY_ID);
-        if (existsInfo) {
-            newLinkId = service.insert(new BookToAuthorToGenreLink(newBook, newAuthor, newGenre));
-        }
-
-        return (newLinkId != EMPTY_ID);
-    }
-
-    @Override
-    public void deleteLinkByBookTitle(String bookTitle) {
-        BookToAuthorToGenreLink existsLink = service.getByBookTitle(bookTitle);
-
-        if (existsLink.getId() == 0) {
-            return;
-        }
-
-        genreService.deleteById(existsLink.getGenre().getId());
-        authorService.deleteById(existsLink.getAuthor().getId());
-        bookService.deleteById(existsLink.getBook().getId());
-
-        service.deleteById(existsLink.getId());
-    }
-
-    @Override
-    public List<BookToAuthorToGenreLink> getAllLink() {
-        return service.getAllLink();
-    }
 
     private Genre checkAndInsertGenre(String genreName) {
-        Genre findGenre = genreService.getByName(genreName);
-        if (findGenre.getId() == 0) {
-            return createNewGenre(genreName);
-        }
-        return findGenre;
+        Optional<Genre> foundGenre = genreService.getByName(genreName);
+
+        return foundGenre.orElseGet(() -> createNewGenre(genreName));
     }
 
     private Genre createNewGenre(String genreName) {
-        Genre newGenre = new Genre(genreName);
-        long newGenreId = genreService.insert(newGenre);
-        newGenre.setId(newGenreId);
-        return newGenre;
+        return genreService.insert(new Genre(genreName));
     }
 
-    private Author checkAndInsertAuthor(String fullNameAuthor) {
-        Author author = authorService.parserFullName(fullNameAuthor);
+    private Author checkAndInsertAuthor(String authorName) {
+        Optional<Author> foundAuthor = authorService.getByName(authorName);
 
-        Author findAuthor = authorService.getByFullName(author);
-        if (findAuthor.getId() == EMPTY_ID) {
-            return createNewAuthor(author);
-        }
-        return findAuthor;
+        return foundAuthor.orElseGet(() -> createNewAuthor(authorName));
     }
 
-    private Author createNewAuthor(Author author) {
-        long newAuthorId = authorService.insert(author);
-        author.setId(newAuthorId);
-        return author;
+    private Author createNewAuthor(String authorName) {
+        return authorService.insert(new Author(authorName));
     }
 
-    private Book checkAndInsertBook(String titleBook) {
-        Book findBook = bookService.getByTitle(titleBook);
+    private Book checkAndInsertBook(String titleBook, Author newAuthor, Genre newGenre) {
+        Book newBook = new Book(titleBook, newAuthor, newGenre);
 
-        if (findBook.getId() == EMPTY_ID) {
-            return createNewBook(titleBook);
+        Optional<Book> foundBookWithAllInfo = bookService.getAllByTitle(titleBook);
+        if (foundBookWithAllInfo.isPresent()) {
+            if (foundBookWithAllInfo.get().getAuthor().getId() != newAuthor.getId() || foundBookWithAllInfo.get().getGenre().getId() != newGenre.getId()) {
+                return createNewBook(newBook);
+            }
+            return foundBookWithAllInfo.get();
         }
 
-        return findBook;
+        return createNewBook(newBook);
+
     }
 
-    private Book createNewBook(String titleBook) {
-        Book newBook = new Book(titleBook);
-        long newBookId = bookService.insert(newBook);
-        newBook.setId(newBookId);
-        return newBook;
+    private Book createNewBook(Book newBook) {
+        return bookService.insertAll(newBook);
+    }
+
+    @Override
+    public Book gelBookAllInfoByBookTitle(String bookTitle) {
+        return bookService.getAllByTitle(bookTitle).orElseThrow(() -> new ServiceException(String.format("The book {%s} was not found. Check the request details.", bookTitle)));
+    }
+
+    @Override
+    public List<Book> getAllBookInfo() {
+        return bookService.getAll();
+    }
+
+    @Override
+    public Book insertBookWithAllInfo(String titleBook, String authorName, String genreName) {
+        Genre newGenre = checkAndInsertGenre(genreName);
+        Author newAuthor = checkAndInsertAuthor(authorName);
+        return checkAndInsertBook(titleBook, newAuthor, newGenre);
+    }
+
+    @Override
+    public void deleteBookWithAllInfoByBookTitle(String bookTitle) {
+        Book foundBook = gelBookAllInfoByBookTitle(bookTitle);
+
+        genreService.deleteById(foundBook.getGenre().getId());
+        authorService.deleteById(foundBook.getAuthor().getId());
+        bookService.deleteById(foundBook.getId());
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import ru.otus.spring.dao.exception.DaoException;
 import ru.otus.spring.domain.Genre;
 
 import java.sql.ResultSet;
@@ -22,26 +23,27 @@ public class GenreDaoJdbc implements GenreDao {
     private final NamedParameterJdbcOperations jdbc;
 
     @Override
-    public long insert(Genre genre) {
+    public Genre insert(Genre genre) {
         MapSqlParameterSource params = new MapSqlParameterSource("name", genre.getName());
         KeyHolder kh = new GeneratedKeyHolder();
 
-        jdbc.update("insert into genres(`name`) values(:name)", params, kh);
+        jdbc.update("insert into genres(name) values(:name)", params, kh);
+        genre.setId(kh.getKey().longValue());
 
-        return kh.getKey().longValue();
+        return genre;
     }
 
     @Override
-    public Optional<Genre> getById(long id) {
+    public Genre getById(long id) {
         MapSqlParameterSource params = new MapSqlParameterSource("id", id);
 
-        List<Genre> list = jdbc.query("select * from genres where id = :id", params, new GenreMapper());
-        return list.stream().findFirst();
+        List<Genre> list = jdbc.query("select id, name from genres where id = :id", params, new GenreMapper());
+        return list.stream().findFirst().orElseThrow(() -> new DaoException(String.format("The genre {%d} was not found. Check the request details.", id)));
     }
 
     @Override
     public List<Genre> getAll() {
-        return jdbc.query("select * from genres", new GenreMapper());
+        return jdbc.query("select id, name from genres", new GenreMapper());
     }
 
     @Override
@@ -62,10 +64,11 @@ public class GenreDaoJdbc implements GenreDao {
         jdbc.update("delete from genres where id = :id", params);
     }
 
+
     @Override
     public Optional<Genre> getByName(String genreName) {
         MapSqlParameterSource params = new MapSqlParameterSource("genreName", genreName);
-        List<Genre> list = jdbc.query("select * from genres where name = :genreName", params, new GenreMapper());
+        List<Genre> list = jdbc.query("select id, name from genres where name = :genreName", params, new GenreMapper());
         return list.stream().findFirst();
     }
 

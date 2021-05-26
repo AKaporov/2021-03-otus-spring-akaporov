@@ -5,13 +5,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
+import ru.otus.spring.dao.exception.DaoException;
 import ru.otus.spring.domain.Book;
+import ru.otus.spring.generate.BookGenerator;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 @JdbcTest
 @Import(BookDaoJdbc.class)
@@ -19,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BookDaoJdbcTest {
 
     private static final long EXISTING_BOOK_ID = 1L;
-    private static final String EXISTING_BOOK_TITLE = "Golden Key";
+    private static final String EXISTING_BOOK_TITLE = "The Golden Key, or the Adventures of Pinocchio";
     private static final long NEW_BOOK_ID = 2L;
     private static final String NEW_BOOK_TITLE = "The Bremen Town Musicians";
 
@@ -27,32 +28,31 @@ class BookDaoJdbcTest {
     private BookDaoJdbc dao;
 
     @Test
-    @DisplayName(" должно возвращать ожадаемую book по его id")
+    @DisplayName(" должен возвращать ожадаемую book по его id")
     void shouldReturnExpectedBookById() {
-        Book expectedBook = new Book(EXISTING_BOOK_ID, EXISTING_BOOK_TITLE);
+        Book expectedBook = BookGenerator.createNewBook(EXISTING_BOOK_ID, EXISTING_BOOK_TITLE);
 
-        Optional<Book> actualBook = dao.getById(EXISTING_BOOK_ID);
+        Book actualBook = dao.getAllById(EXISTING_BOOK_ID);
 
-        assertThat(actualBook).usingRecursiveComparison().isEqualTo(Optional.of(expectedBook));
+        assertThat(actualBook).usingRecursiveComparison().isEqualTo(expectedBook);
     }
 
     @Test
-    @DisplayName(" должно добавлять новую book в БД")
+    @DisplayName(" должен добавлять новую book в БД")
     void shouldInsertNewBook() {
-        Book expectedBook = new Book(NEW_BOOK_ID, NEW_BOOK_TITLE);
+        Book expectedBook = BookGenerator.createNewBook(NEW_BOOK_ID, NEW_BOOK_TITLE);
 
-        Book insertBook = new Book(NEW_BOOK_TITLE);
-        long idNewBook = dao.insert(insertBook);
+        Book insertBook = dao.insertAll(BookGenerator.createNewBook(NEW_BOOK_TITLE));
 
-        Optional<Book> actualBook = dao.getById(idNewBook);
+        Book actualBook = dao.getAllById(insertBook.getId());
 
-        assertThat(actualBook).usingRecursiveComparison().isEqualTo(Optional.of(expectedBook));
+        assertThat(actualBook).usingRecursiveComparison().isEqualTo(expectedBook);
     }
 
     @Test
     @DisplayName(" должен возвращать ожидаемый список books")
     void shouldReturnAllBooks() {
-        Book expectedBook = new Book(EXISTING_BOOK_ID, EXISTING_BOOK_TITLE);
+        Book expectedBook = BookGenerator.createNewBook(EXISTING_BOOK_ID, EXISTING_BOOK_TITLE);
 
         List<Book> actualBooksList = dao.getAll();
 
@@ -62,34 +62,38 @@ class BookDaoJdbcTest {
     @Test
     @DisplayName(" должен изменять название books по его id")
     void shouldUpdateTitleBookById() {
-        Book expectedBook = new Book(EXISTING_BOOK_ID, NEW_BOOK_TITLE);
+        Book expectedBook = BookGenerator.createNewBook(EXISTING_BOOK_ID, NEW_BOOK_TITLE);
 
         dao.update(expectedBook);
 
-        Optional<Book> actualBook = dao.getById(expectedBook.getId());
+        Book actualBook = dao.getAllById(expectedBook.getId());
 
-        assertThat(actualBook).usingRecursiveComparison().isEqualTo(Optional.of(expectedBook));
+        assertThat(actualBook).usingRecursiveComparison().isEqualTo(expectedBook);
     }
 
     @Test
     @DisplayName(" должен удалять book по его id")
     void shouldDeleteBookById() {
-        Optional<Book> expectedBook = dao.getById(EXISTING_BOOK_ID);
-        assertThat(expectedBook).isNotEmpty();
+        assertThatCode(() -> dao.getAllById(EXISTING_BOOK_ID)).doesNotThrowAnyException();
 
         dao.deleteById(EXISTING_BOOK_ID);
 
-        Optional<Book> actualBook = dao.getById(EXISTING_BOOK_ID);
-        assertThat(actualBook).isEmpty();
+        assertThatThrownBy(() -> dao.getAllById(EXISTING_BOOK_ID)).isInstanceOf(DaoException.class);
     }
 
     @Test
     @DisplayName(" должен возвращать ожидаемую book по его title")
     void shouldReturnExpectedBookByTitle() {
-        Book expectedBook = new Book(EXISTING_BOOK_ID, EXISTING_BOOK_TITLE);
+        Book expectedBook = BookGenerator.createNewBook(EXISTING_BOOK_ID, EXISTING_BOOK_TITLE);
 
-        Optional<Book> actualBook = dao.getByTitle(EXISTING_BOOK_TITLE);
+        Optional<Book> actualBook = dao.getAllByTitle(EXISTING_BOOK_TITLE);
 
         assertThat(actualBook).usingRecursiveComparison().isEqualTo(Optional.of(expectedBook));
+    }
+
+    @Test
+    @DisplayName(" должен кидать DaoException, если не нашел book по id")
+    void shouldReturnDaoExceptionByNotExistsBookId() {
+        assertThatThrownBy(() -> dao.getAllById(NEW_BOOK_ID)).isInstanceOf(DaoException.class);
     }
 }

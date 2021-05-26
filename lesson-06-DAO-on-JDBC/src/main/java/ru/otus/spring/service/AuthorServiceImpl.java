@@ -16,20 +16,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorDao dao;
-    private final ParseFullNameAuthorService parse;
 
     @Override
-    public long insert(Author author) {
+    public Author insert(Author author) {
         return dao.insert(author);
     }
 
     @Override
     public Author getById(long id) {
-        return dao.getById(id).orElse(emptyAuthor());
-    }
-
-    private Author emptyAuthor() {
-        return new Author("", "", "");
+        return dao.getById(id);
     }
 
     @Override
@@ -44,19 +39,11 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void deleteById(long id) {
-        Optional<Author> findAuthor = dao.getById(id);
-        if (findAuthor.isPresent()) {
-            dao.deleteById(id);
-        }
+        dao.deleteById(id);
     }
 
     @Override
-    public Author getByFullName(Author author) {
-        return dao.getByFullName(author).orElse(emptyAuthor());
-    }
-
-    @Override
-    public Author parserFullName(String fullNameAuthor) {
-        return parse.parser(fullNameAuthor);
+    public Optional<Author> getByName(String name) {
+        return dao.getByName(name);
     }
 }

@@ -6,12 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AuthorDao {
+    Author insert(Author author);
 
-    long insert(Author author);
+    Author getById(long id);
 
-    Optional<Author> getById(long id);
-
-    Optional<Author> getByFullName(Author author);
+    Optional<Author> getByName(String name);
 
     List<Author> getAll();
 

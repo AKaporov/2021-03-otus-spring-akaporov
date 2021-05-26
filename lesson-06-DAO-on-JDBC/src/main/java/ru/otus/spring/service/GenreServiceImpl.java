@@ -18,17 +18,13 @@ public class GenreServiceImpl implements GenreService {
     private final GenreDao dao;
 
     @Override
-    public long insert(Genre genre) {
+    public Genre insert(Genre genre) {
         return dao.insert(genre);
     }
 
     @Override
     public Genre getById(long id) {
-        return dao.getById(id).orElse(emptyGenre());
-    }
-
-    private Genre emptyGenre() {
-        return new Genre("");
+        return dao.getById(id);
     }
 
     @Override
@@ -43,14 +39,11 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public void deleteById(long id) {
-        Optional<Genre> findGenre = dao.getById(id);
-        if (findGenre.isPresent()) {
-            dao.deleteById(id);
-        }
+        dao.deleteById(id);
     }
 
     @Override
-    public Genre getByName(String genreName) {
-        return dao.getByName(genreName).orElse(emptyGenre());
+    public Optional<Genre> getByName(String genreName) {
+        return dao.getByName(genreName);
     }
 }

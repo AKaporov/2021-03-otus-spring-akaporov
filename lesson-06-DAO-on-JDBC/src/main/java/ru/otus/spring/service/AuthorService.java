@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AuthorService {
-    long insert(Author author);
+    Author insert(Author author);
 
     Author getById(long id);
 
@@ -16,7 +16,5 @@ public interface AuthorService {
 
     void deleteById(long id);
 
-    Author getByFullName(Author author);
-
-    Author parserFullName(String fullNameAuthor);
+    Optional<Author> getByName(String name);
 }

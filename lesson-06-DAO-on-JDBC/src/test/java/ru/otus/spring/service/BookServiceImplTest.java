@@ -10,14 +10,13 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.spring.dao.BookDao;
 import ru.otus.spring.domain.Book;
-
-import java.util.Optional;
+import ru.otus.spring.generate.BookGenerator;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Сервис по работе с book")
 class BookServiceImplTest {
     private static final long EXISTING_BOOK_ID = 1L;
-    private static final String EXISTING_BOOK_TITLE = "Golden Key";
+    private static final String EXISTING_BOOK_TITLE = "The Golden Key";
 
     private BookService bookService;
     @Mock
@@ -31,11 +30,11 @@ class BookServiceImplTest {
     @Test
     @DisplayName("должен получать book по его id")
     void shouldGetBookById() {
-        Book expectedBook = new Book(EXISTING_BOOK_ID, EXISTING_BOOK_TITLE);
+        Book expectedBook = BookGenerator.createNewBook(EXISTING_BOOK_ID, EXISTING_BOOK_TITLE);
 
-        Mockito.when(bookDao.getById(EXISTING_BOOK_ID)).thenReturn(Optional.of(expectedBook));
+        Mockito.when(bookDao.getAllById(EXISTING_BOOK_ID)).thenReturn(expectedBook);
 
-        Book actualBook = bookService.getById(EXISTING_BOOK_ID);
+        Book actualBook = bookService.getAllById(EXISTING_BOOK_ID);
 
         Assertions.assertThat(actualBook).usingRecursiveComparison().isEqualTo(expectedBook);
     }

@@ -11,33 +11,27 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.spring.dao.AuthorDao;
 import ru.otus.spring.domain.Author;
 
-import java.util.Optional;
-
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Сервис по работе с author")
 class AuthorServiceImplTest {
     private static final long EXISTING_AUTHOR_ID = 1L;
-    private static final String EXISTING_AUTHOR_SURNAME = "Tolstoy";
-    private static final String EXISTING_AUTHOR_NAME = "Alexey";
-    private static final String EXISTING_AUTHOR_PATRONYMIC = "Nikolaevich";
+    private static final String EXISTING_AUTHOR_NAME = "Толстой А. Н.";
 
     private AuthorService authorService;
     @Mock
     private AuthorDao authorDao;
-    @Mock
-    private ParseFullNameAuthorService parse;
 
     @BeforeEach
     void setUp() {
-        authorService = new AuthorServiceImpl(authorDao, parse);
+        authorService = new AuthorServiceImpl(authorDao);
     }
 
     @Test
     @DisplayName("должен получать author по его id")
     void shouldGetAuthorById() {
-        Author expectedAuthor = new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_SURNAME, EXISTING_AUTHOR_NAME, EXISTING_AUTHOR_PATRONYMIC);
+        Author expectedAuthor = new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME);
 
-        Mockito.when(authorDao.getById(EXISTING_AUTHOR_ID)).thenReturn(Optional.of(expectedAuthor));
+        Mockito.when(authorDao.getById(EXISTING_AUTHOR_ID)).thenReturn(expectedAuthor);
         Author actualAuthor = authorService.getById(EXISTING_AUTHOR_ID);
 
         Assertions.assertThat(actualAuthor).usingRecursiveComparison().isEqualTo(expectedAuthor);

@@ -5,12 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
+import ru.otus.spring.dao.exception.DaoException;
 import ru.otus.spring.domain.Genre;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 @JdbcTest
 @Import(GenreDaoJdbc.class)
@@ -29,12 +30,11 @@ class GenreDaoJdbcTest {
     void shouldInsertNewGenre() {
         Genre expectedGenre = new Genre(NEW_GENRE_ID, NEW_GENRE_NAME);
 
-        Genre insertGenre = new Genre(NEW_GENRE_NAME);
-        long newGenreId = dao.insert(insertGenre);
+        Genre insertGenre = dao.insert(new Genre(NEW_GENRE_NAME));
 
-        Optional<Genre> actualGenre = dao.getById(newGenreId);
+        Genre actualGenre = dao.getById(insertGenre.getId());
 
-        assertThat(actualGenre).usingRecursiveComparison().isEqualTo(Optional.of(expectedGenre));
+        assertThat(actualGenre).usingRecursiveComparison().isEqualTo(expectedGenre);
     }
 
     @Test
@@ -42,9 +42,9 @@ class GenreDaoJdbcTest {
     void shouldReturnExpectedGenreById() {
         Genre expectedGenre = new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME);
 
-        Optional<Genre> actualGenre = dao.getById(expectedGenre.getId());
+        Genre actualGenre = dao.getById(expectedGenre.getId());
 
-        assertThat(actualGenre).usingRecursiveComparison().isEqualTo(Optional.of(expectedGenre));
+        assertThat(actualGenre).usingRecursiveComparison().isEqualTo(expectedGenre);
     }
 
     @Test
@@ -63,9 +63,9 @@ class GenreDaoJdbcTest {
         Genre expectedGenre = new Genre(EXISTING_GENRE_ID, NEW_GENRE_NAME);
 
         dao.update(expectedGenre);
-        Optional<Genre> actualGenre = dao.getById(EXISTING_GENRE_ID);
+        Genre actualGenre = dao.getById(EXISTING_GENRE_ID);
 
-        assertThat(actualGenre).usingRecursiveComparison().isEqualTo(Optional.of(expectedGenre));
+        assertThat(actualGenre).usingRecursiveComparison().isEqualTo(expectedGenre);
     }
 
     @Test
@@ -76,5 +76,21 @@ class GenreDaoJdbcTest {
         Optional<Genre> actualGenre = dao.getByName(EXISTING_GENRE_NAME);
 
         assertThat(actualGenre).usingRecursiveComparison().isEqualTo(Optional.of(expectedGenre));
+    }
+
+    @Test
+    @DisplayName("должен удалять genre из БД по Id")
+    void shouldDeleteGenreById() {
+        assertThatCode(() -> dao.getById(EXISTING_GENRE_ID)).doesNotThrowAnyException();
+
+        dao.deleteById(EXISTING_GENRE_ID);
+
+        assertThatThrownBy(() -> dao.getById(EXISTING_GENRE_ID)).isInstanceOf(DaoException.class);
+    }
+
+    @Test
+    @DisplayName("должен кидать DaoException, если не нашел genre по id")
+    void shouldReturnDaoExceptionByNotExistsGenreId() {
+        assertThatThrownBy(() -> dao.getById(NEW_GENRE_ID)).isInstanceOf(DaoException.class);
     }
 }

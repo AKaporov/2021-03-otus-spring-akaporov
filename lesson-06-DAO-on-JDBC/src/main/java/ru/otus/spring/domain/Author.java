@@ -12,7 +12,5 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class Author {
     private long id;
-    private final String surName;
     private final String name;
-    private final String patronymic;
 }
