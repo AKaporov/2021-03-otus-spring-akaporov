@@ -1,3 +1,7 @@
+# IDEA
+.idea/
+.mvn/
+
 #Ignore thumbnails created by Windows
 Thumbs.db
 
@@ -72,26 +76,3 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
-*.yml
-*.txt
-*.properties
-*.csv
-*.class
-*.lst
-*.xml
-*.jar
-*.original
-*.pb
-lesson-05-Shell/.idea/$PRODUCT_WORKSPACE_FILE$
-lesson-05-Shell/.idea/.name
-lesson-05-Shell/.idea/sonarlint/issuestore/0/2/0253691af916335102b17a0bb82b9bfbeab3765e
-lesson-05-Shell/.idea/sonarlint/issuestore/1/5/158081983b60bb83b22669dd65fff84ee9fa8053
-lesson-05-Shell/.idea/sonarlint/issuestore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec
-lesson-05-Shell/.idea/sonarlint/issuestore/6/e/6ef328d7a9f431b6f37fcc53a068a7705cdc599b
-lesson-05-Shell/.idea/sonarlint/issuestore/9/b/9b0dc4f71ea71cb2fe96ed2332575aae1e1b4b56
-lesson-05-Shell/.idea/sonarlint/issuestore/f/0/f0edcc1ebe1a8417351133f75e68c9cd76985b82
-*.log
-lesson-06-DAO-on-JDBC/.mvn/wrapper/maven-wrapper.jar
-lesson-06-DAO-on-JDBC/.mvn/wrapper/maven-wrapper.jar
-lesson-06-DAO-on-JDBC/.mvn/wrapper/MavenWrapperDownloader.java
-lesson-06-DAO-on-JDBC/.mvn/wrapper/maven-wrapper.jar
