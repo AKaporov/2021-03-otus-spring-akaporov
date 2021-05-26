@@ -26,10 +26,10 @@
 #### Это домашнее задание является основой для следующих.
 
 ### Команды
-- ibl или insertBookLink - Добавьте книгу со всей сопутствующей информацией, укажите ее «Название» «SurName Имя Отчество» «Жанр»;
-- fbl или findBookLink - Получите всю информацию о книге по ее названию;
-- dbl или deleteBookLink - Удалить книгу со всей связанной информацией по названию;
-- fabl или findAllBookLink - Найдите все книги и сопутствующую информацию о них. 
+- iba или insertBookAll - Добавьте книгу со всей сопутствующей информацией, укажите ее «Название» «SurName Имя Отчество» «Жанр»;
+- fb  или findBookAllInfo - Получите всю информацию о книге по ее названию;
+- dba или deleteBookAll - Удалить книгу со всей связанной информацией по названию;
+- fab или findAllBook - Найдите все книги и сопутствующую информацию о них. 
 
 * [Using Spring Data JDBC](https://github.com/spring-projects/spring-data-examples/tree/master/jdbc/basics)
 * [H2 Database Engine](http://www.h2database.com/html/main.html)

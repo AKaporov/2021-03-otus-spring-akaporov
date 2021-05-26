@@ -27,7 +27,7 @@ public class LibraryShell {
         return localeService.getMessage("shell.book.all.insert", new String[]{titleBook});
     }
 
-    @ShellMethod(key = {"fb", "findBook"}, value = "Get all information about a book by its title")
+    @ShellMethod(key = {"fb", "findBookAllInfo"}, value = "Get all information about a book by its title")
     public String getAllInfoByBookTitle(@ShellOption String titleBook) {
         Book foundBook = libraryService.gelBookAllInfoByBookTitle(titleBook);
 
@@ -37,7 +37,7 @@ public class LibraryShell {
                         foundBook.getGenre().getName()});
     }
 
-    @ShellMethod(key = {"db", "deleteBook"}, value = "Delete a book with all related information, by its title")
+    @ShellMethod(key = {"dba", "deleteBookAll"}, value = "Delete a book with all related information, by its title")
     public String deleteBookWithAllInfoByTitle(@ShellOption String titleBook) {
         libraryService.deleteBookWithAllInfoByBookTitle(titleBook);
         return localeService.getMessage("shell.book.all.delete", new String[]{titleBook});

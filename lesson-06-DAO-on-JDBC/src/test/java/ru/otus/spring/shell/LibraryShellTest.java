@@ -28,7 +28,7 @@ class LibraryShellTest {
     private static final String EXISTING_GENRE_NAME = "Story";
 
     private static final String COMMAND_FIND_BOOK_PATTERN = "%s \"%s\"";
-    private static final String COMMAND_FIND_BOOK = "findBook";
+    private static final String COMMAND_FIND_BOOK = "findBookAllInfo";
     private static final String COMMAND_FIND_BOOK_SHORT = "fb";
 
     private static final String COMMAND_FIND_ALL_BOOK = "findAllBook";
