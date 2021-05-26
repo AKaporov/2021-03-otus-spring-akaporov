@@ -1,6 +1,7 @@
 # IDEA
 .idea/
 .mvn/
+*.jar
 
 #Ignore thumbnails created by Windows
 Thumbs.db
