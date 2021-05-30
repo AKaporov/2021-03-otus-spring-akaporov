@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.TestPropertySource;
 import ru.otus.spring.dao.exception.DaoException;
 import ru.otus.spring.domain.Genre;
 
@@ -15,13 +16,14 @@ import static org.assertj.core.api.Assertions.*;
 
 @JdbcTest
 @Import(GenreDaoJdbc.class)
+@TestPropertySource(properties = "spring.datasource.data=genre-test.sql")
 @DisplayName("Dao для работы с Genre")
 class GenreDaoJdbcTest {
-
     private static final long EXISTING_GENRE_ID = 1L;
     private static final String EXISTING_GENRE_NAME = "Story";
     private static final String NEW_GENRE_NAME = "Comedy";
     private static final long NEW_GENRE_ID = 2L;
+
     @Autowired
     private GenreDaoJdbc dao;
 

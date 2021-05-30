@@ -1,0 +1,1 @@
+insert into authors(name) values('Tolstoy A. N.');

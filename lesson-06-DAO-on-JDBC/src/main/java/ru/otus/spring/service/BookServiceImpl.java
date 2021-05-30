@@ -51,9 +51,4 @@ public class BookServiceImpl implements BookService {
     public Book getById(long id) {
         return dao.getById(id);
     }
-
-    @Override
-    public Optional<Book> getByTitle(String titleBook) {
-        return dao.getByTitle(titleBook);
-    }
 }

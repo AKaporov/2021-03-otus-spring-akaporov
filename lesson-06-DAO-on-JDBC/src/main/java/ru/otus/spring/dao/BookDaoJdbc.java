@@ -79,21 +79,6 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public Optional<Book> getByTitle(String titleBook) {
-        MapSqlParameterSource params = new MapSqlParameterSource("titleBook", titleBook);
-        List<Book> list = jdbc.query("select b.id as book_id " +
-                "    , b.title      as book_title " +
-                "    , 0            as author_id " +
-                "    , \'\'         as author_name " +
-                "    , 0            as genre_id " +
-                "    , \'\'         as genre_name " +
-                " from books b " +
-                "where b.title = :titleBook", params, new BookMapper());
-
-        return list.stream().findFirst();
-    }
-
-    @Override
     public Optional<Book> getAllByTitle(String titleBook) {
         MapSqlParameterSource params = new MapSqlParameterSource();
 

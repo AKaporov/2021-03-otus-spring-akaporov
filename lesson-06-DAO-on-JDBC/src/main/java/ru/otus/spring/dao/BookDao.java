@@ -14,8 +14,6 @@ public interface BookDao {
 
     Optional<Book> getAllByTitle(String bookTitle);
 
-    Optional<Book> getByTitle(String titleBook);
-
     List<Book> getAll();
 
     void update(Book book);

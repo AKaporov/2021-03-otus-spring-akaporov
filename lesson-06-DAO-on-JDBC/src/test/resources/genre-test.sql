@@ -1,0 +1,1 @@
+insert into genres(name) values('Story');

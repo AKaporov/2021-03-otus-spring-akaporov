@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.TestPropertySource;
 import ru.otus.spring.dao.exception.DaoException;
 import ru.otus.spring.domain.Author;
 
@@ -15,6 +16,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @JdbcTest
 @Import(AuthorDaoJdbc.class)
+@TestPropertySource(properties = "spring.datasource.data=author-test.sql")
 @DisplayName("Dao для работы с Author")
 class AuthorDaoJdbcTest {
     private static final long EXISTING_AUTHOR_ID = 1L;
