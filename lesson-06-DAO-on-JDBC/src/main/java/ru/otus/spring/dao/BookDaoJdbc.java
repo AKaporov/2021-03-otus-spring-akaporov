@@ -62,23 +62,6 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public Book getById(long id) {
-        Map<String, Object> params = new HashMap<>(1);
-        params.put("id", id);
-
-        List<Book> list = jdbc.query("select b.id as book_id " +
-                "    , b.title      as book_title " +
-                "    , 0            as author_id " +
-                "    , \'\'         as author_name " +
-                "    , 0            as genre_id " +
-                "    , \'\'         as genre_name " +
-                " from books b " +
-                "where b.id = :id", params, new BookMapper());
-
-        return list.stream().findFirst().orElseThrow(() -> new DaoException(String.format("The book {%d} was not found. Check the request details.", id)));
-    }
-
-    @Override
     public Optional<Book> getAllByTitle(String titleBook) {
         MapSqlParameterSource params = new MapSqlParameterSource();
 

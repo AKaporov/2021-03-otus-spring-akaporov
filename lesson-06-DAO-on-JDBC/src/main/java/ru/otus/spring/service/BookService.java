@@ -10,8 +10,6 @@ public interface BookService {
 
     Book getAllById(long id);
 
-    Book getById(long id);
-
     Optional<Book> getAllByTitle(String bookTitle);
 
     List<Book> getAll();
