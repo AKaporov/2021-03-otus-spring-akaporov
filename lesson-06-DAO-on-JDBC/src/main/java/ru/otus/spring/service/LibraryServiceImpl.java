@@ -54,7 +54,6 @@ public class LibraryServiceImpl implements LibraryService {
         }
 
         return createNewBook(newBook);
-
     }
 
     private Book createNewBook(Book newBook) {
@@ -63,7 +62,9 @@ public class LibraryServiceImpl implements LibraryService {
 
     @Override
     public Book gelBookAllInfoByBookTitle(String bookTitle) {
-        return bookService.getAllByTitle(bookTitle).orElseThrow(() -> new ServiceException(String.format("The book {%s} was not found. Check the request details.", bookTitle)));
+        return bookService.getAllByTitle(bookTitle)
+                .orElseThrow(() -> new ServiceException(
+                        String.format("The book {%s} was not found. Check the request details.", bookTitle)));
     }
 
     @Override
@@ -82,8 +83,6 @@ public class LibraryServiceImpl implements LibraryService {
     public void deleteBookWithAllInfoByBookTitle(String bookTitle) {
         Book foundBook = gelBookAllInfoByBookTitle(bookTitle);
 
-        genreService.deleteById(foundBook.getGenre().getId());
-        authorService.deleteById(foundBook.getAuthor().getId());
         bookService.deleteById(foundBook.getId());
     }
 }
