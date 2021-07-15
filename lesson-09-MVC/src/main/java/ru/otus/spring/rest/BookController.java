@@ -17,12 +17,12 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping(value = "/api/v1/books")
-    public BookDto getBookByTitleInRequestParams(@RequestParam(value = "BookTitle", required = true, defaultValue = "") String bookTitle) {
+    @GetMapping(value = "/api/v1/books/{BookTitle}")
+    public BookDto getBookByTitleInPath(@PathVariable(value = "BookTitle", required = true) String bookTitle) {
         return bookService.findBookByTitle(bookTitle);
     }
 
-    @RequestMapping(value = "/api/v1/books/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/v1/books", method = RequestMethod.GET)
     public List<BookDto> getAllBooks() {
         return bookService.findAllBooks();
     }
@@ -51,6 +51,6 @@ public class BookController {
 
     @ExceptionHandler(BookNotFoundException.class)
     private ResponseEntity<String> handleBookNotFoundException(BookNotFoundException e) {
-        return ResponseEntity.badRequest().body(String.format("%s. Cause error: %s", e.getFullTextError(), e.getCause()));
+        return ResponseEntity.badRequest().body(String.format("The book {%s} was not found. Check the request details.", e.getErrorMessage()));
     }
 }
