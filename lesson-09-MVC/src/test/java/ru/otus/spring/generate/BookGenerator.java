@@ -40,6 +40,11 @@ public class BookGenerator {
     private static final String DREAMERS_BOOK_TITLE = "Dreamers";
     private static final String NOSOV_AUTHOR_NAME = "Nosov N.";
 
+    private static final String TIMUR_BOOK_TITlE = "Timur and his team";
+    private static final String GAIDAR_AUTHOR = "Gaidar A. P.";
+    private static final String  SCHOOL_LIBRARY_GENRE = "School library";
+    private static final String SCHOOL_BOOK_TITlE = "School";
+
     public static BookReviewDto getReviewsByGoldenKey() {
         List<String> reviews = new ArrayList<>(3);
         reviews.add(GOLDEN_KEY_BOOK_REVIEW_ONE);
@@ -76,6 +81,14 @@ public class BookGenerator {
 
     public static BookDto getBookDtoDreamers() {
         return new BookDto(DREAMERS_BOOK_TITLE, NOSOV_AUTHOR_NAME, GENRE_LIBRARY_SOVIET_NOVEL);
+    }
+
+    public static BookDto getBookDtoTimurAndHisTeam() {
+        return new BookDto(TIMUR_BOOK_TITlE, GAIDAR_AUTHOR, SCHOOL_LIBRARY_GENRE);
+    }
+
+    public static BookDto getBookDtoSchool() {
+        return new BookDto(SCHOOL_BOOK_TITlE, GAIDAR_AUTHOR, SCHOOL_LIBRARY_GENRE);
     }
 
     public static Book getExistsBookGoldenKey() {
