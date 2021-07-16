@@ -34,12 +34,12 @@ public class BookControllerTest {
     private ObjectMapper mapper;
 
     @Test
-    @DisplayName("должен возвращать конкретную книгу по её названию")
-    void shouldReturnCorrectBookByTitleInPath() throws Exception {
+    @DisplayName("должен возвращать конкретную книгу по её названию. Название передано через RequestParam")
+    void shouldReturnCorrectBookByTitleInRequestParam() throws Exception {
         BookDto expectedResult = BookGenerator.getBookDtoGoldenKey();
 
         mvc.perform(
-                get("/api/v1/books/{BookTitle}", expectedResult.getTitle())
+                get("/api/v1/books").param("BookTitle", expectedResult.getTitle())
         )
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(expectedResult)));
@@ -91,7 +91,7 @@ public class BookControllerTest {
         BookDto bookDtoToDelete = BookGenerator.getBookDtoDreamers();
 
         mvc.perform(
-                get("/api/v1/books/{BookTitle}", bookDtoToDelete.getTitle())
+                get("/api/v1/books").param("BookTitle", bookDtoToDelete.getTitle())
         )
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(bookDtoToDelete)));
@@ -102,7 +102,7 @@ public class BookControllerTest {
 
 
         mvc.perform(
-                get("/api/v1/books/{BookTitle}", bookDtoToDelete.getTitle())
+                get("/api/v1/books").param("BookTitle", bookDtoToDelete.getTitle())
         )
                 .andExpect(status().isBadRequest())
                 .andExpect(result -> assertTrue(
@@ -134,7 +134,7 @@ public class BookControllerTest {
         Book notExistsBook = BookGenerator.getNotExistsBook();
 
         mvc.perform(
-                get("/api/v1/books/{BookTitle}", notExistsBook.getTitle())
+                get("/api/v1/books").param("BookTitle", notExistsBook.getTitle())
         )
                 .andExpect(status().isBadRequest())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof BookNotFoundException));
