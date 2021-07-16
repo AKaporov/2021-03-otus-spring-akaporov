@@ -17,8 +17,8 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping(value = "/api/v1/books/{BookTitle}")
-    public BookDto getBookByTitleInPath(@PathVariable(value = "BookTitle", required = true) String bookTitle) {
+    @GetMapping(value = "/api/v1/books", params = "BookTitle")
+    public BookDto getBookByTitleInRequestParams(@RequestParam(value = "BookTitle", required = true, defaultValue = "") String bookTitle) {
         return bookService.findBookByTitle(bookTitle);
     }
 
