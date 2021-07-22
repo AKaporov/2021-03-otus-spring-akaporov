@@ -22,7 +22,7 @@ public class BookController {
         return bookService.findBookByTitle(bookTitle);
     }
 
-    @RequestMapping(value = "/api/v1/books", method = RequestMethod.GET)
+    @GetMapping(value = "/api/v1/books")
     public List<BookDto> getAllBooks() {
         return bookService.findAllBooks();
     }
