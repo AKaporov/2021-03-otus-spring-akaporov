@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.dto.BookDto;
 import ru.otus.spring.dto.BookReviewDto;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 @AutoConfigureMockMvc
 @DisplayName("Rest контроллер по работе с книгами")
 public class BookControllerTest {
@@ -71,7 +71,7 @@ public class BookControllerTest {
     }
 
     @Test
-    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Transactional
     @DisplayName("должен корректно сохранять новую книгу переданную через тело запроса")
     void shouldCorrectSaveNewBookInRequestBody() throws Exception {
         BookDto booksDtoToSave = BookGenerator.getNewBookDtoToSave();
@@ -85,7 +85,7 @@ public class BookControllerTest {
     }
 
     @Test
-    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Transactional
     @DisplayName("должен корретно удалять книгу")
     void shouldCorrectDeleteBookByBookTitleInPath() throws Exception {
         BookDto bookDtoToDelete = BookGenerator.getBookDtoDreamers();
@@ -111,7 +111,7 @@ public class BookControllerTest {
     }
 
     @Test
-    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Transactional
     @DisplayName("должен коррктно сохранять отзыв на книгу")
     void shouldCorrectSaveNewReviewInPathAndRequestParam() throws Exception {
         BookDto goldenKeyBookDto = BookGenerator.getBookDtoGoldenKey();
