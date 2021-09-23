@@ -1,0 +1,49 @@
+spring:
+  messages:
+    basename: i18n.messages
+    fallback-to-system-locale: false
+  datasource:
+    url: jdbc:h2:mem:testdb
+#    schema: schema.sql
+#    data: data.sql
+    initialization-mode: always #never
+  jpa:
+    show-sql: true
+    generate-ddl: false #true
+    hibernate:
+      ddl-auto: none #create
+    properties:
+      hibernate:
+        format_sql: false
+  h2:
+    console:
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  shell:
+    interactive:
+      enabled: true
+
+# actuator.endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # доступ ко всем точкам
+  endpoint:
+    health:
+      show-details: always # Подробности Health Information достпупны всем пользователям.
+  health:
+    defaults:
+      enabled: true # Auto-configured HealthIndicators (true - enable, false - disable)
+
+logging:
+  level:
+    root: INFO
+  file:
+    name: "log_mY/logging_from_application_yml.log"
+
+library:
+  healthindicator:
+    maximum-number-books: 6
+    fill-percentage: 90
