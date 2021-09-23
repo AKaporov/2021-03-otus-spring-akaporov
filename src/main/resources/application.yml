@@ -1,0 +1,46 @@
+spring:
+  messages:
+    basename: i18n.messages
+    fallback-to-system-locale: false
+  datasource:
+    url: jdbc:h2:mem:testdb
+    initialization-mode: always
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+  h2:
+    console:
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  shell:
+    interactive:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+  file:
+    name: "log_mY/logging_from_application_yml.log"
+
+library:
+  healthindicator:
+    maximum-number-books: 6
+    fill-percentage: 90
