@@ -23,6 +23,7 @@ public class FillPercentageHealthIndicator implements HealthIndicator {
 
     @Override
     public Health health() {
+        
         Health.Builder status = Health.up();
         float currentFillPercentage = getCurrentFillPercentage();
         if (currentFillPercentage >= fillPercentage) {
