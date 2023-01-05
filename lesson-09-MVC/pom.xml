@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ru.otus</groupId>
-    <artifactId>spring</artifactId>
+    <artifactId>SpringMVC</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>library</name>
+    <name>09-MVC</name>
     <description>Lesson-09-SpringMVC</description>
     <properties>
         <java.version>1.8</java.version>
@@ -53,6 +53,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>10</source>
+                    <target>10</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

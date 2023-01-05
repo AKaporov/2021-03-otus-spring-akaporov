@@ -21,7 +21,7 @@ class BookRepositoryJpaImplTest {
     private BookRepositoryJpa repositoryJpa;
 
     @Test
-    @DisplayName("дожен возвращать конкретную книгу по его названию")
+    @DisplayName("должен возвращать конкретную книгу по его названию")
     void shouldFindBookByTitle() {
         Book expectedBook = em.find(Book.class, BOOK_EXISTS_ONE_ID);
 

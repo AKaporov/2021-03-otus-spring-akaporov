@@ -10,9 +10,9 @@
     </parent>
 
     <groupId>ru.otus</groupId>
-    <artifactId>spring</artifactId>
+    <artifactId>SpringSecurity</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>library</name>
+    <name>10-Security</name>
     <description>Lesson-10-SpringSecurity</description>
 
     <properties>

@@ -18,7 +18,9 @@ public class BookController {
     }
 
     @GetMapping(value = "/api/v1/books", params = "BookTitle")
-    public BookDto getBookByTitleInRequestParams(@RequestParam(value = "BookTitle", required = true, defaultValue = "") String bookTitle) {
+    public BookDto getBookByTitleInRequestParams(
+            @RequestParam(value = "BookTitle", required = true, defaultValue = "")
+                    String bookTitle) {
         return bookService.findBookByTitle(bookTitle);
     }
 
@@ -28,24 +30,33 @@ public class BookController {
     }
 
     @GetMapping(value = "/api/v1/books/{BookTitle}/reviews")
-    public BookReviewDto getBookReviewsByBookTitleInPath(@PathVariable(value = "BookTitle", required = true) String bookTitle) {
+    public BookReviewDto getBookReviewsByBookTitleInPath(
+            @PathVariable(value = "BookTitle", required = true)
+                    String bookTitle) {
         return bookService.findBookReviewsByTitle(bookTitle);
     }
 
     @PostMapping(value = "/api/v1/books")
-    public BookDto createNewBookInRequestBody(@RequestBody(required = true) BookDto dto) {
+    public BookDto createNewBookInRequestBody(
+            @RequestBody(required = true)
+                    BookDto dto) {
         return bookService.save(dto);
     }
 
     @DeleteMapping(value = "/api/v1/books/{BookTitle}")
-    public void deleteBookByBookTitleInPath(@PathVariable(value = "BookTitle", required = true) String bookTitle) {
+    public void deleteBookByBookTitleInPath(
+            @PathVariable(value = "BookTitle", required = true)
+                    String bookTitle) {
         BookDto foundBook = bookService.findBookByTitle(bookTitle);
         bookService.remove(new BookDto(foundBook.getTitle(), foundBook.getAuthor(), foundBook.getGenre()));
     }
 
     @PostMapping(value = "/api/v1/books/{BookTitle}/review")
-    public void saveReviewInRequestParams(@PathVariable(value = "BookTitle", required = true) String bookTitle,
-                                          @RequestParam(value = "review", required = true, defaultValue = "") String review) {
+    public void saveReviewInRequestParams(
+            @PathVariable(value = "BookTitle", required = true)
+                    String bookTitle,
+            @RequestParam(value = "review", required = true, defaultValue = "")
+                    String review) {
         bookService.saveReview(bookTitle, review);
     }
 
